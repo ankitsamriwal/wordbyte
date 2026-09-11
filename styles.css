@@ -1,11 +1,11 @@
 :root{
-  --bg:#09090B;
-  --ink:#F4F4F6;
-  --muted:#9B9BA6;
-  --faint:#6E6E7A;
-  --line:rgba(255,255,255,0.10);
-  --glass:rgba(18,18,24,0.66);
-  --accent:#7C6FF0;
+  --bg:#F5F1E7;
+  --ink:#3E382E;
+  --muted:#7D7462;
+  --faint:#A79D8B;
+  --line:rgba(62,56,46,0.14);
+  --glass:rgba(255,253,247,0.72);
+  --accent:#8FA98F;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;}
@@ -28,8 +28,8 @@ h1,h2,h3,.age-btn,.chip,.letter-btn{font-family:"Manrope","DM Sans",sans-serif;}
 .vignette{
   position:fixed;inset:0;pointer-events:none;
   background:
-    radial-gradient(120% 90% at 50% 0%, rgba(124,111,240,0.07), transparent 55%),
-    radial-gradient(ellipse at center, transparent 52%, rgba(0,0,0,0.55) 100%);
+    radial-gradient(120% 90% at 50% 0%, rgba(143,169,143,0.12), transparent 55%),
+    radial-gradient(ellipse at center, transparent 55%, rgba(133,116,88,0.20) 100%);
 }
 
 /* ---------- HUD ---------- */
@@ -38,7 +38,7 @@ h1,h2,h3,.age-btn,.chip,.letter-btn{font-family:"Manrope","DM Sans",sans-serif;}
 .hud-top{
   top:0;display:flex;align-items:center;justify-content:space-between;
   gap:12px;padding:calc(12px + env(safe-area-inset-top)) 16px 10px;
-  background:linear-gradient(rgba(9,9,11,0.85), rgba(9,9,11,0));
+  background:linear-gradient(rgba(245,241,231,0.92), rgba(245,241,231,0));
 }
 .brand{display:flex;align-items:center;gap:10px;min-width:0;}
 .logo{width:34px;height:34px;flex:none;}
@@ -56,7 +56,7 @@ h1,h2,h3,.age-btn,.chip,.letter-btn{font-family:"Manrope","DM Sans",sans-serif;}
   transition:background .18s,color .18s;
 }
 .age-btn:hover{color:var(--ink);}
-.age-btn.active{background:var(--ink);color:#0A0A0D;}
+.age-btn.active{background:var(--ink);color:#F8F4EA;}
 
 .hud-controls{
   top:calc(64px + env(safe-area-inset-top));
@@ -69,7 +69,7 @@ h1,h2,h3,.age-btn,.chip,.letter-btn{font-family:"Manrope","DM Sans",sans-serif;}
   padding:9px 16px;color:var(--muted);
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
 }
-.search-box:focus-within{border-color:rgba(255,255,255,0.24);color:var(--ink);}
+.search-box:focus-within{border-color:rgba(62,56,46,0.32);color:var(--ink);}
 .search-box input{
   flex:1;min-width:0;border:none;background:transparent;outline:none;
   color:var(--ink);font:inherit;font-size:14px;
@@ -78,16 +78,16 @@ h1,h2,h3,.age-btn,.chip,.letter-btn{font-family:"Manrope","DM Sans",sans-serif;}
 .search-box input::-webkit-search-cancel-button{-webkit-appearance:none;}
 .search-results{
   position:absolute;top:calc(100% + 8px);left:0;right:0;
-  background:rgba(16,16,22,0.92);border:1px solid var(--line);border-radius:16px;
+  background:rgba(255,253,247,0.96);border:1px solid var(--line);border-radius:16px;
   backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
-  overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,0.55);
+  overflow:hidden;box-shadow:0 18px 50px rgba(96,82,58,0.28);
 }
 .sr-item{
   display:flex;align-items:center;gap:10px;width:100%;
   padding:11px 16px;border:none;background:transparent;color:var(--ink);
   font:inherit;font-size:14px;font-weight:600;text-align:left;cursor:pointer;
 }
-.sr-item:hover,.sr-item:focus{background:rgba(255,255,255,0.06);}
+.sr-item:hover,.sr-item:focus{background:rgba(62,56,46,0.06);}
 .sr-item .dot{width:9px;height:9px;border-radius:50%;flex:none;}
 .sr-item .cat{margin-left:auto;font-size:11px;color:var(--muted);font-weight:500;}
 
@@ -105,13 +105,13 @@ h1,h2,h3,.age-btn,.chip,.letter-btn{font-family:"Manrope","DM Sans",sans-serif;}
 }
 .chip .n{font-size:10px;color:var(--faint);font-weight:700;}
 .chip:hover{color:var(--ink);}
-.chip.active{background:var(--ink);color:#0A0A0D;border-color:var(--ink);}
-.chip.active .n{color:rgba(0,0,0,0.5);}
+.chip.active{background:var(--ink);color:#F8F4EA;border-color:var(--ink);}
+.chip.active .n{color:rgba(248,244,234,0.62);}
 
 .hud-bottom{
   bottom:0;display:flex;align-items:flex-end;justify-content:space-between;gap:10px;
   padding:10px 16px calc(12px + env(safe-area-inset-bottom));
-  background:linear-gradient(rgba(9,9,11,0), rgba(9,9,11,0.85));
+  background:linear-gradient(rgba(245,241,231,0), rgba(245,241,231,0.92));
 }
 .result-count{font-size:12px;color:var(--muted);font-weight:600;}
 .hint{
@@ -125,16 +125,16 @@ h1,h2,h3,.age-btn,.chip,.letter-btn{font-family:"Manrope","DM Sans",sans-serif;}
 /* ---------- Modal ---------- */
 .modal-backdrop{
   position:fixed;inset:0;z-index:20;display:flex;align-items:flex-end;justify-content:center;
-  background:rgba(4,4,7,0.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  background:rgba(84,72,52,0.32);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
   padding:16px;padding-bottom:calc(20px + env(safe-area-inset-bottom));
 }
 .modal-backdrop[hidden]{display:none;}
 .modal{
-  --cat:#7C6FF0;
+  --cat:#B4A8CF;
   position:relative;width:min(480px,100%);max-height:78dvh;overflow-y:auto;
-  background:rgba(18,18,25,0.86);border:1px solid var(--line);border-radius:24px;
+  background:rgba(255,253,248,0.92);border:1px solid var(--line);border-radius:24px;
   backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
-  padding:26px 24px 24px;box-shadow:0 30px 80px rgba(0,0,0,0.6);
+  padding:26px 24px 24px;box-shadow:0 30px 80px rgba(96,82,58,0.35);
   animation:rise .32s cubic-bezier(.2,.9,.25,1);
 }
 .modal::before{
@@ -147,23 +147,23 @@ h1,h2,h3,.age-btn,.chip,.letter-btn{font-family:"Manrope","DM Sans",sans-serif;}
   border:1px solid var(--line);border-radius:50%;background:transparent;
   color:var(--muted);font-size:19px;cursor:pointer;line-height:1;
 }
-.modal-close:hover{color:var(--ink);background:rgba(255,255,255,0.06);}
+.modal-close:hover{color:var(--ink);background:rgba(62,56,46,0.06);}
 .modal-head{display:flex;align-items:center;gap:14px;margin-bottom:12px;}
 .modal-letter{
   width:52px;height:52px;flex:none;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  font-family:"Manrope",sans-serif;font-weight:800;font-size:22px;color:#0B0B0E;
-  background:radial-gradient(circle at 34% 30%, rgba(255,255,255,0.9), var(--cat) 42%, rgba(0,0,0,0.55) 105%);
-  text-shadow:0 1px 0 rgba(255,255,255,0.35);
+  font-family:"Manrope",sans-serif;font-weight:800;font-size:22px;color:#2E2A22;
+  background:radial-gradient(circle at 34% 30%, rgba(255,255,255,0.95), var(--cat) 42%, rgba(110,94,66,0.5) 105%);
+  text-shadow:0 1px 0 rgba(255,255,255,0.4);
   box-shadow:0 6px 22px -4px var(--cat);
 }
 .modal-head h2{font-size:23px;font-weight:800;letter-spacing:-0.01em;line-height:1.15;margin-bottom:6px;}
-.modal-head .chip{border:none;color:#fff;font-size:11px;padding:4px 10px;pointer-events:none;}
+.modal-head .chip{border:none;color:#3E382E;font-size:11px;padding:4px 10px;pointer-events:none;}
 .modal-age-hint{font-size:11px;color:var(--faint);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
 .modal-def{font-size:16px;line-height:1.6;color:var(--ink);}
 .modal-example{
   margin-top:16px;padding:14px 16px;border-radius:14px;
-  background:rgba(255,255,255,0.045);border:1px solid var(--line);
+  background:rgba(62,56,46,0.05);border:1px solid var(--line);
 }
 .modal-example h3,.modal-related h3{
   font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;
@@ -171,7 +171,7 @@ h1,h2,h3,.age-btn,.chip,.letter-btn{font-family:"Manrope","DM Sans",sans-serif;}
 .modal-example p{font-size:14px;line-height:1.55;color:var(--muted);}
 .modal-related{margin-top:16px;}
 .modal-related .chip{margin:0 6px 8px 0;color:var(--ink);}
-.modal-related .chip:hover{border-color:rgba(255,255,255,0.3);}
+.modal-related .chip:hover{border-color:rgba(62,56,46,0.35);}
 
 .sr-only{
   position:absolute;width:1px;height:1px;padding:0;margin:-1px;
