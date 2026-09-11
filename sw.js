@@ -1,7 +1,8 @@
-var CACHE="wordbyte-v3";
+var CACHE="wordbyte-v4";
 var ASSETS=["./","index.html","styles.css","app.js","icon.svg","manifest.webmanifest",
 "data/ai-basics.js","data/machine-learning.js","data/data-words.js","data/stats-math.js",
-"data/robots-hardware.js","data/internet-coding.js","data/careers.js","data/safety-ethics.js"];
+"data/robots-hardware.js","data/internet-coding.js","data/careers.js","data/safety-ethics.js",
+"data/generative-ai.js","data/ai-agents.js"];
 self.addEventListener("install",function(e){
   e.waitUntil(caches.open(CACHE).then(function(c){return c.addAll(ASSETS);}).then(function(){return self.skipWaiting();}));
 });

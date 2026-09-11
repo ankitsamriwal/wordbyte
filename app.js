@@ -4,7 +4,8 @@ var TERMS = window.WORDBYTE || [];
 var CAT_COLORS = {
   "AI Basics":"#E0A18F","Machine Learning":"#B4A8CF","Data":"#9CBFA6",
   "Stats & Math":"#DDBE86","Robots & Hardware":"#D6A7B4",
-  "Internet & Coding":"#9BB6CD","Careers":"#AFBC93","Safety & Ethics":"#DCA07C"
+  "Internet & Coding":"#9BB6CD","Careers":"#AFBC93","Safety & Ethics":"#DCA07C",
+  "Generative AI":"#8FBDB4","AI Agents":"#B99FB5"
 };
 var BAND_NAMES = {1:"ages 5-7",2:"ages 8-10",3:"ages 11-13",4:"ages 14+"};
 var state = { band: parseInt(localStorage.getItem("wb_band")||"2",10), q:"", cat:"All" };
@@ -26,7 +27,8 @@ TERMS.forEach(function(t,i){
   var rr = Math.sqrt(Math.max(0,1-y*y));
   var th = i*2.39996323 + 0.5*frand(i+7);
   t._x=Math.cos(th)*rr; t._y=y; t._z=Math.sin(th)*rr;
-  t._rad = 0.058+0.042*frand(i+13);
+  var sizeF=clamp(Math.sqrt(150/NTOT),0.55,1);
+  t._rad = (0.058+0.042*frand(i+13))*sizeF;
   t._a=0; t._ta=0; t._sx=0; t._sy=0; t._sr=0; t._d=-1; t._ph=frand(i+29)*6.283;
 });
 
@@ -49,28 +51,32 @@ var SPRITES={};
 function makeBall(color){
   var s=160,c=document.createElement("canvas");c.width=s;c.height=s;
   var g=c.getContext("2d"), rgb=hexRgb(color);
-  // outer glow
-  var glow=g.createRadialGradient(s/2,s/2,s*0.30,s/2,s/2,s*0.5);
-  glow.addColorStop(0,"rgba("+rgb.r+","+rgb.g+","+rgb.b+",0.34)");
+  // faint outer halo, kept subtle so neighboring balls stay crisp
+  var glow=g.createRadialGradient(s/2,s/2,s*0.34,s/2,s/2,s*0.5);
+  glow.addColorStop(0,"rgba("+rgb.r+","+rgb.g+","+rgb.b+",0.18)");
   glow.addColorStop(1,"rgba("+rgb.r+","+rgb.g+","+rgb.b+",0)");
   g.fillStyle=glow;g.fillRect(0,0,s,s);
-  // sphere
-  var r=s*0.33,cx=s/2,cy=s/2;
-  var body=g.createRadialGradient(cx-r*0.42,cy-r*0.46,r*0.08,cx,cy,r*1.02);
-  body.addColorStop(0,"rgba(255,255,255,0.92)");
-  body.addColorStop(0.28,color);
-  body.addColorStop(1,"rgba("+Math.round(rgb.r*0.65+96*0.35)+","+Math.round(rgb.g*0.65+82*0.35)+","+Math.round(rgb.b*0.65+58*0.35)+",1)");
+  // sphere with a clean three-stop shade: bright top-left, true color mid, warm earth at the edge
+  var r=s*0.36,cx=s/2,cy=s/2;
+  var body=g.createRadialGradient(cx-r*0.42,cy-r*0.46,r*0.06,cx,cy,r*1.0);
+  body.addColorStop(0,"rgba(255,255,255,0.96)");
+  body.addColorStop(0.22,"rgba("+Math.round(rgb.r*0.7+255*0.3)+","+Math.round(rgb.g*0.7+255*0.3)+","+Math.round(rgb.b*0.7+255*0.3)+",1)");
+  body.addColorStop(0.55,color);
+  body.addColorStop(0.85,"rgba("+Math.round(rgb.r*0.82+110*0.18)+","+Math.round(rgb.g*0.82+96*0.18)+","+Math.round(rgb.b*0.82+70*0.18)+",1)");
+  body.addColorStop(1,"rgba("+Math.round(rgb.r*0.6+92*0.4)+","+Math.round(rgb.g*0.6+80*0.4)+","+Math.round(rgb.b*0.6+56*0.4)+",1)");
   g.fillStyle=body;g.beginPath();g.arc(cx,cy,r,0,6.283);g.fill();
-  // soft earthy outline so balls read clearly on the light canvas
-  g.strokeStyle="rgba(96,82,58,0.28)";g.lineWidth=s*0.012;
-  g.beginPath();g.arc(cx,cy,r,0,6.283);g.stroke();
-  // rim light bottom-right
-  var rim=g.createRadialGradient(cx+r*0.55,cy+r*0.6,r*0.1,cx+r*0.4,cy+r*0.45,r*0.95);
-  rim.addColorStop(0,"rgba("+rgb.r+","+rgb.g+","+rgb.b+",0.5)");
-  rim.addColorStop(0.5,"rgba("+rgb.r+","+rgb.g+","+rgb.b+",0.08)");
-  rim.addColorStop(1,"rgba(0,0,0,0)");
+  // crisp earthy outline so each ball reads cleanly on the light canvas
+  g.strokeStyle="rgba(96,82,58,0.42)";g.lineWidth=s*0.014;
+  g.beginPath();g.arc(cx,cy,r-g.lineWidth/2,0,6.283);g.stroke();
+  // small specular highlight for a polished-glass feel
+  var hl=g.createRadialGradient(cx-r*0.40,cy-r*0.44,0,cx-r*0.40,cy-r*0.44,r*0.42);
+  hl.addColorStop(0,"rgba(255,255,255,0.85)");
+  hl.addColorStop(0.5,"rgba(255,255,255,0.25)");
+  hl.addColorStop(1,"rgba(255,255,255,0)");
   g.save();g.beginPath();g.arc(cx,cy,r,0,6.283);g.clip();
-  g.fillStyle=rim;g.fillRect(0,0,s,s);g.restore();
+  g.fillStyle=hl;g.beginPath();
+  g.ellipse(cx-r*0.38,cy-r*0.44,r*0.34,r*0.22,-0.6,0,6.283);g.fill();
+  g.restore();
   return c;
 }
 Object.keys(CAT_COLORS).forEach(function(c){SPRITES[c]=makeBall(CAT_COLORS[c]);});
