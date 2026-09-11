@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>WordByte - The AI & Data Dictionary for Kids</title>
+<meta name="description" content="A friendly dictionary of AI, data and robot words for kids. Pick your age and every word explains itself just right for you.">
+<meta name="theme-color" content="#FFF7EC">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <div class="brand">
+      <img src="icon.svg" alt="WordByte logo" class="logo">
+      <div>
+        <h1>WordByte</h1>
+        <p class="tagline">The AI &amp; Data Dictionary for Kids</p>
+      </div>
+    </div>
+    <div class="age-slicer" role="group" aria-label="Pick your age">
+      <span class="age-label">I am</span>
+      <button data-band="1" class="age-btn">5&ndash;7</button>
+      <button data-band="2" class="age-btn">8&ndash;10</button>
+      <button data-band="3" class="age-btn">11&ndash;13</button>
+      <button data-band="4" class="age-btn">14+</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="search-row">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+      <input id="search" type="search" placeholder="Search a word, like robot or data..." autocomplete="off" aria-label="Search words">
+    </div>
+  </div>
+
+  <nav class="cat-row" id="categories" aria-label="Categories"></nav>
+
+  <nav class="letter-row" id="letters" aria-label="Browse by letter"></nav>
+
+  <p class="result-count" id="resultCount"></p>
+
+  <main id="grid" class="grid" aria-live="polite"></main>
+
+  <footer class="site-footer">
+    <p>Made for curious kids. Every word grows with you - pick a different age and read it again.</p>
+  </footer>
+</div>
+
+<div class="modal-backdrop" id="backdrop" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <button class="modal-close" id="mClose" aria-label="Close">&times;</button>
+    <div class="modal-head">
+      <span class="modal-letter" id="mLetter"></span>
+      <div>
+        <h2 id="mTitle"></h2>
+        <span class="chip" id="mCat"></span>
+      </div>
+    </div>
+    <p class="modal-age-hint" id="mAgeHint"></p>
+    <p class="modal-def" id="mDef"></p>
+    <div class="modal-example" id="mExampleWrap" hidden>
+      <h3>For example</h3>
+      <p id="mExample"></p>
+    </div>
+    <div class="modal-related" id="mRelatedWrap" hidden>
+      <h3>Related words</h3>
+      <div id="mRelated"></div>
+    </div>
+  </div>
+</div>
+
+<script src="data/ai-basics.js"></script>
+<script src="data/machine-learning.js"></script>
+<script src="data/data-words.js"></script>
+<script src="data/stats-math.js"></script>
+<script src="data/robots-hardware.js"></script>
+<script src="data/internet-coding.js"></script>
+<script src="data/careers.js"></script>
+<script src="data/safety-ethics.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
