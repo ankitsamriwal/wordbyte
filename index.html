@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>WordByte - The AI & Data Dictionary for Kids</title>
-<meta name="description" content="A friendly dictionary of AI, data and robot words for kids. Pick your age and every word explains itself just right for you.">
+<meta name="description" content="A galaxy of AI, data and robot words for kids. Spin the stars, tap a word, and every word explains itself just right for your age.">
 <meta name="theme-color" content="#09090B">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -15,44 +15,38 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header class="site-header">
-  <div class="wrap">
-    <div class="brand">
-      <img src="icon.svg" alt="WordByte logo" class="logo">
-      <div>
-        <h1>WordByte</h1>
-        <p class="tagline">The AI &amp; Data Dictionary for Kids</p>
-      </div>
+<canvas id="space" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+
+<header class="hud hud-top">
+  <div class="brand">
+    <img src="icon.svg" alt="WordByte logo" class="logo">
+    <div>
+      <h1>WordByte</h1>
+      <p class="tagline">The AI &amp; Data Dictionary for Kids</p>
     </div>
-    <div class="age-slicer" role="group" aria-label="Pick your age">
-      <span class="age-label">I am</span>
-      <button data-band="1" class="age-btn">5&ndash;7</button>
-      <button data-band="2" class="age-btn">8&ndash;10</button>
-      <button data-band="3" class="age-btn">11&ndash;13</button>
-      <button data-band="4" class="age-btn">14+</button>
-    </div>
+  </div>
+  <div class="age-slicer" role="group" aria-label="Pick your age">
+    <span class="age-label">I am</span>
+    <button data-band="1" class="age-btn">5&ndash;7</button>
+    <button data-band="2" class="age-btn">8&ndash;10</button>
+    <button data-band="3" class="age-btn">11&ndash;13</button>
+    <button data-band="4" class="age-btn">14+</button>
   </div>
 </header>
 
-<div class="wrap">
-  <div class="search-row">
-    <div class="search-box">
-      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
-      <input id="search" type="search" placeholder="Search a word, like robot or data..." autocomplete="off" aria-label="Search words">
-    </div>
+<div class="hud hud-controls">
+  <div class="search-box">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+    <input id="search" type="search" placeholder="Search a word, like robot or data..." autocomplete="off" aria-label="Search words">
+    <div class="search-results" id="searchResults" hidden></div>
   </div>
-
   <nav class="cat-row" id="categories" aria-label="Categories"></nav>
+</div>
 
-  <nav class="letter-row" id="letters" aria-label="Browse by letter"></nav>
-
+<div class="hud hud-bottom">
   <p class="result-count" id="resultCount"></p>
-
-  <main id="grid" class="grid" aria-live="polite"></main>
-
-  <footer class="site-footer">
-    <p>Made for curious kids. Every word grows with you - pick a different age and read it again.</p>
-  </footer>
+  <p class="hint" id="hint">Drag to spin &middot; Pinch to zoom &middot; Tap a ball</p>
 </div>
 
 <div class="modal-backdrop" id="backdrop" hidden>
@@ -76,6 +70,11 @@
       <div id="mRelated"></div>
     </div>
   </div>
+</div>
+
+<div class="sr-only">
+  <h2>All words</h2>
+  <dl id="srList"></dl>
 </div>
 
 <script src="data/ai-basics.js"></script>

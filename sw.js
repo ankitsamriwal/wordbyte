@@ -1,4 +1,4 @@
-var CACHE="wordbyte-v1";
+var CACHE="wordbyte-v2";
 var ASSETS=["./","index.html","styles.css","app.js","icon.svg","manifest.webmanifest",
 "data/ai-basics.js","data/machine-learning.js","data/data-words.js","data/stats-math.js",
 "data/robots-hardware.js","data/internet-coding.js","data/careers.js","data/safety-ethics.js"];
