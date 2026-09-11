@@ -124,7 +124,9 @@ function liveCount(){
 function draw(now){
   ctx.setTransform(DPR,0,0,DPR,0,0);
   ctx.clearRect(0,0,W,H);
-  var R=Math.min(W,H)*0.36*zoom;
+  var phone=W<560;
+  CY=phone?H*0.57:H*0.53;
+  var R=Math.min(W,H)*(phone?0.47:0.36)*zoom;
 
   // stars
   var starR=Math.min(W,H)*0.52*zoom;
@@ -153,8 +155,8 @@ function draw(now){
   list.sort(function(a,b){return a._d-b._d;});
 
   var q=state.q.toLowerCase();
-  var labelThresh=W<560?0.42:0.12;
-  var labelBudget=W<560?26:70;
+  var labelThresh=W<560?0.5:0.12;
+  var labelBudget=W<560?20:60;
   var labeled=0;
 
   for(i=0;i<list.length;i++){
@@ -182,9 +184,10 @@ function draw(now){
     }
   }
 
-  // labels (front nodes first)
+  // labels (front nodes first, collision-culled)
   ctx.textAlign="center";
   try{ctx.letterSpacing="1.5px";}catch(e){}
+  var boxes=[];
   for(i=list.length-1;i>=0;i--){
     var m=list[i];
     if(labeled>=labelBudget)break;
@@ -194,9 +197,21 @@ function draw(now){
     var df=(m._d+1)/2;
     var size=emph?11:(W<560?9:10);
     ctx.font="600 "+size+"px Manrope, sans-serif";
+    var label=m.t.toUpperCase();
+    var lw=ctx.measureText(label).width;
+    var lx=clamp(m._sx,lw/2+8,W-lw/2-8);
+    var ly=m._sy-m._sr-9;
+    var box={x0:lx-lw/2-4,x1:lx+lw/2+4,y0:ly-size-3,y1:ly+4};
+    var hit=false;
+    for(var bi=0;bi<boxes.length;bi++){
+      var bb=boxes[bi];
+      if(box.x0<bb.x1&&box.x1>bb.x0&&box.y0<bb.y1&&box.y1>bb.y0){hit=true;break;}
+    }
+    if(hit&&!emph)continue;
+    boxes.push(box);
     ctx.globalAlpha=m._a*(emph?0.98:(0.18+0.62*df));
     ctx.fillStyle="#EDEDF2";
-    ctx.fillText(m.t.toUpperCase(),m._sx,m._sy-m._sr-9);
+    ctx.fillText(label,lx,ly);
     labeled++;
   }
   try{ctx.letterSpacing="0px";}catch(e2){}
@@ -243,7 +258,7 @@ function openTerm(t){
 
 /* ---------- pointer input ---------- */
 canvas.addEventListener("pointerdown",function(e){
-  canvas.setPointerCapture(e.pointerId);
+  try{canvas.setPointerCapture(e.pointerId);}catch(err){}
   pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
   lastInteract=performance.now();focusAnim=null;velX=velY=0;
   if(pointers.size===1){
