@@ -141,3 +141,5 @@ h1,h2,h3,.age-btn,.chip,.term-name,.letter-btn{font-family:'Baloo 2','Nunito',sa
   .grid{grid-template-columns:1fr}
   .term-def{display:block}
 }
+
+.modal-backdrop[hidden]{display:none}
