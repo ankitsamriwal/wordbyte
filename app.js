@@ -458,7 +458,7 @@ document.addEventListener("keydown",function(e){if(e.key==="Escape")closeModal()
 var srList=document.getElementById("srList");
 TERMS.forEach(function(t){
   var dt=document.createElement("dt");dt.textContent=t.t;
-  var dd=document.createElement("dd");dd.textContent=t.d[2]||t.d[1];
+  var dd=document.createElement("dd");dd.textContent=t.d[t.min]||t.d[1];
   srList.appendChild(dt);srList.appendChild(dd);
 });
 
